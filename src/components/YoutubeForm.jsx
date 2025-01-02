@@ -39,7 +39,9 @@ const YoutubeForm = () => {
             <div className='form-control'>
             <label htmlFor='email'>Email</label>
             <Field type='email'id='email'name='email'/>
-           <ErrorMessage name='email' />
+           <ErrorMessage name='email'>
+            {errorMsg => <div className='error'>{errorMsg}</div>}
+           </ErrorMessage>
             </div> 
 
             <div className='form-control'>
