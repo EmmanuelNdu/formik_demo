@@ -1,5 +1,5 @@
 import React from 'react'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik'
 import * as Yup from 'yup'
 import TextError from './TextError'
 
@@ -7,8 +7,14 @@ const initialValues =  {
     name:"",
     email:"",
     channel:"",
-    comment:"",
-    address:""
+    comments:"",
+    address:"",
+    socials:{
+        facebook: '',
+        twitter: ''
+    },
+    phoneNumbers:['', ''],
+    phNumbers: ['']
 }
 
 const onSubmit = values => {
@@ -75,6 +81,38 @@ const YoutubeForm = () => {
                         }
                     </Field>
                 </div>
+
+                <div className='form-control'>
+                    <label htmlFor='facebook'>Facebook Profile</label>
+                    <Field type='text' id='facebook' name='social.facebook' />
+                </div>
+
+                <div className='form-control'>
+                    <label htmlFor='facebook'>Twitter Profile</label>
+                    <Field type='text' id='twitter' name='social.twitter' />
+                </div>
+
+                <div className='form-control'>
+                    <label htmlFor='primaryPh'>Primary phone number</label>
+                    <Field type='text' id='primaryPh' name='phoneNumbers[0]'/>
+                </div>
+
+                <div className='form-control'>
+                    <label htmlFor='secondaryPh'>Secondary phone number</label>
+                    <Field type='text' id='secondaryPh' name='phoneNumbers[1]'/>
+                </div>
+
+                <div className='form-control'>
+                    <label>List of Phone Numbers</label>
+                    <FieldArray name='phNumbers'>
+                        {
+                            (fieldArrayProps) => {
+
+                            }
+                        }
+                    </FieldArray>
+                </div>
+
 
             <button type='submit'>Submit</button>
         </Form>
