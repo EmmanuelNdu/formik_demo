@@ -1,5 +1,5 @@
 import React from 'react'
-import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik'
+import { Formik, Form, Field, ErrorMessage, FieldArray, FastField } from 'formik'
 import * as Yup from 'yup'
 import TextError from './TextError'
 
@@ -34,7 +34,11 @@ const YoutubeForm = () => {
     <Formik
     initialValues={initialValues}
     validationSchema={validationSchema}
-    onSubmit={onSubmit}>
+    onSubmit={onSubmit}
+    validateOnChange={false}
+    validateOnBlur={false}
+    >
+        
         <Form>
             <div className='form-control'>
             <label htmlFor='name'>Name</label>
@@ -68,9 +72,10 @@ const YoutubeForm = () => {
 
                 <div className='form-control'>
                     <label htmlFor='address'>Address</label>
-                    <Field name='address'>
+                    <FastField name='address'>
                         {
                             (props) => {
+                                console.log('Field render')
                                 const {field, form, meta} = props
                                 console.log('Render props', props)
                                 return<div>
@@ -79,7 +84,7 @@ const YoutubeForm = () => {
                                 </div>
                             }
                         }
-                    </Field>
+                    </FastField>
                 </div>
 
                 <div className='form-control'>
@@ -107,8 +112,23 @@ const YoutubeForm = () => {
                     <FieldArray name='phNumbers'>
                         {
                             (fieldArrayProps) => {
-                                console.log('fieldArrayProps', fieldArrayProps)
-                                return <div>Field Array</div>
+                                const { push, remove, form } = fieldArrayProps
+                                const {values} = form
+                                const {phNumbers}  = values 
+                                console.log('Form error', form.errors)
+                                return <div>
+                                    {phNumbers.map((phNumber, index) => (
+                                            <div key={index}>
+                                                <Field name={`phNumbers[${index}]`} />
+                                                {index > 0 && (
+                                                        <button type='button' onClick={() => remove(index)}> - </button>
+                                                )}
+                                                
+                                                <button type='button' onClick={() => push('')}> + </button>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
                             }
                         }
                     </FieldArray>
