@@ -107,6 +107,8 @@ const YoutubeForm = () => {
                     <FieldArray name='phNumbers'>
                         {
                             (fieldArrayProps) => {
+                                console.log('fieldArrayProps', fieldArrayProps)
+                                return <div>Field Array</div>
                             }
                         }
                     </FieldArray>
