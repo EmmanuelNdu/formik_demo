@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import TextError from './TextError'
 
 const initialValues =  {
-    name:"",
+    name:"Emmanuel",
     email:"",
     channel:"",
     comments:"",
@@ -17,8 +17,24 @@ const initialValues =  {
     phNumbers: ['']
 }
 
-const onSubmit = values => {
+const savedValues =  {
+    name:"Emmanuel",
+    email:"E@example.com",
+    channel:"Cartervlog",
+    comments:"Crater world",
+    address:"30, Downing ",
+    socials:{
+        facebook: '',
+        twitter: ''
+    },
+    phoneNumbers:['', ''],
+    phNumbers: ['']
+}
+
+const onSubmit = (values, onSubmitProps) => {
     console.log('Form data', values)
+    console.log('submit props', onSubmitProps)
+    onSubmitProps.setSubmitting(false)
 }
 
 const validationSchema = Yup.object({
@@ -43,6 +59,7 @@ const YoutubeForm = () => {
     initialValues={initialValues}
     validationSchema={validationSchema}
     onSubmit={onSubmit}
+    // validateOnMount
     >
         {
             formik => {
@@ -148,10 +165,26 @@ const YoutubeForm = () => {
                         }
                     </FieldArray>
                 </div>
-
-            <button type='button' onClick={() => formik.validateField('comments')}>Validate comments</button>
-            <button type='button' onClick={() => formik.validateForm()}>Validate all</button>
-            <button type='submit'>Submit</button>
+{/* 
+            <button type='button' onClick={() => formik.validateField('comments')}>
+                Validate comments
+                </button>
+            <button type='button' onClick={() => formik.validateForm()}>
+                Validate all
+                </button>
+                <button type='button' onClick={() => formik.setFieldTouched('comments')}>
+             Visit comments
+                </button>
+            <button type='button' onClick={() => formik.setTouched({
+                name: true,
+                email: true,
+                channel: true,
+                comments: true
+            })}>
+                Visit Field
+                </button> */}
+                <button type='button' >Load saved Data</button>
+            <button type='submit' disabled={!formik.isValid || formik.isSubmitting }>Submit</button>
         </Form>
 
                 )
