@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Formik, Form, Field, ErrorMessage, FieldArray, FastField } from 'formik'
 import * as Yup from 'yup'
 import TextError from './TextError'
@@ -21,7 +21,7 @@ const savedValues =  {
     name:"Emmanuel",
     email:"E@example.com",
     channel:"Cartervlog",
-    comments:"Crater world",
+    comments:"Carter world",
     address:"30, Downing ",
     socials:{
         facebook: '',
@@ -54,11 +54,13 @@ const validateComments = value => {
 }
 
 const YoutubeForm = () => {
+    const [ formValues, setFormValues ] = useState(null)
   return (
     <Formik
-    initialValues={initialValues}
+    initialValues={formValues || initialValues}
     validationSchema={validationSchema}
     onSubmit={onSubmit}
+    enableReinitialize
     // validateOnMount
     >
         {
@@ -183,8 +185,12 @@ const YoutubeForm = () => {
             })}>
                 Visit Field
                 </button> */}
-                <button type='button' >Load saved Data</button>
-            <button type='submit' disabled={!formik.isValid || formik.isSubmitting }>Submit</button>
+                <button type='button' onClick={() => setFormValues(savedValues)}>
+                    Load saved Data
+                    </button>
+            <button 
+            type='submit' 
+            disabled={!formik.isValid || formik.isSubmitting }>Submit</button>
         </Form>
 
                 )
